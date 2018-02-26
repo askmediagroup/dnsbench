@@ -6,22 +6,16 @@ Have you ever needed to troubleshoot a DNS server? Or maybe you want to do some 
 
 ## Installation
 
-With [Go](https://golang.org/doc/install) and [Dep](https://golang.github.io/dep/docs/introduction.html) installed:
+With [Go](https://golang.org/doc/install) installed:
 
 ```bash
-git clone https://github.com/askcom/dnsbench.git
-
-cd dnsbench
-
-dep init
-
-go build dnsbench.go
+go get -u github.com/askcom/dnsbench
 ```
 
 ## Usage and examples
 
 ```bash
-./dnsbench <nameserver> [flags]
+dnsbench <nameserver> [flags]
   -concurrency int
         Numer of concurrent requests (default 10)
   -count int
@@ -39,7 +33,7 @@ go build dnsbench.go
 Example 1: Benchmark DNS using local resolver:
 
 ```bash
-$ echo "example.com" | ./dnsbench -local
+$ echo "example.com" | dnsbench -local
 
 Reading names from /dev/stdin
 Benchmarking...
@@ -64,7 +58,7 @@ Slowest request: 72.35 [ms]
 Example 2: Benchmark a specified nameserver with a file of domains:
 
 ```bash
-./dnsbench <nameserver ip> -names "domains_to_lookup.txt"
+dnsbench <nameserver ip> -names "domains_to_lookup.txt"
 
 Reading names from domains_to_lookup.txt
 Benchmarking...

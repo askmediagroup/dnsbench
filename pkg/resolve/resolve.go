@@ -1,5 +1,4 @@
 // Package dnsbench exports types and functions to run dns benchmark tests
-
 package dnsbench
 
 import (

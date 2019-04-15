@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/askcom/dnsbench/pkg/version"
+	"github.com/askmediagroup/dnsbench/pkg/version"
 	"github.com/spf13/cobra"
 )
 

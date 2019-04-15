@@ -1,6 +1,6 @@
 package main
 
-import "github.com/askcom/dnsbench/pkg/cmd"
+import "github.com/askmediagroup/dnsbench/pkg/cmd"
 
 func main() {
 	cmd.Execute()

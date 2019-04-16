@@ -1,22 +1,19 @@
+// Copyright 2019 AskMediaGroup.
+// SPDX-License-Identifier: Apache-2.0
+
 package cmd
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/spf13/cobra"
 )
 
-// rootCmd represents the base command
-var rootCmd = &cobra.Command{
-	Use:   "dnsbench [command]",
-	Short: "A simple DNS latency benchmark",
-}
-
-// Execute adds all child commands to the root command and sets flags appropriately.
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+// NewRootCommand returns the root command for the dnsbench command.
+func NewRootCommand() *cobra.Command {
+	c := &cobra.Command{
+		Use:   "dnsbench [command]",
+		Short: "A simple DNS latency benchmark",
 	}
+	c.AddCommand(newRunCommand())
+	c.AddCommand(newVersionCommand())
+	return c
 }

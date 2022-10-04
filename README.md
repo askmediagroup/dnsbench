@@ -9,7 +9,7 @@ Have you ever needed to troubleshoot a DNS server? Or maybe you want to do some 
 With [Go](https://golang.org/doc/install) installed:
 
 ```bash
-go get -u github.com/askmediagroup/dnsbench/cmd/dnsbench
+go install github.com/erikh/dnsbench/cmd/dnsbench@latest
 ```
 
 ## Usage and examples

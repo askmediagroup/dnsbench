@@ -1,0 +1,32 @@
+project_name: dnsbench
+builds:
+- main: ./cmd/dnsbench/main.go
+  binary: dnsbench
+  ldflags: -s -X github.com/askmediagroup/dnsbench/pkg/cmd.dnsbenchVersion={{.Version}} -X github.com/askmediagroup/dnsbench/pkg/cmd.gitCommit={{.Commit}} -X github.com/askmediagroup/dnsbench/pkg/cmd.buildDate={{.Date}}
+  goos:
+  - darwin
+  - linux
+  - windows
+  goarch:
+   - amd64
+  env:
+  - CGO_ENABLED=0
+  - GO111MODULE=on
+checksum:
+  name_template: 'checksums.txt'
+archive:
+  format: binary
+snapshot:
+  name_template: "master"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+    - Merge pull request
+    - Merge branch
+release:
+  github:
+    owner: askmediagroup
+    name: dnsbench

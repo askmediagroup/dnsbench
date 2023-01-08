@@ -15,30 +15,27 @@ go get -u github.com/askmediagroup/dnsbench/cmd/dnsbench
 ## Usage and examples
 
 ```bash
-Execute a latency test.
+Execute a DNS benchmark test.
 
 Usage:
-  dnsbench run [command]
-
-Available Commands:
-  local       Benchmark the local system resolver configuration.
-  remote      Benchmark a remote nameserver.
+  dnsbench run [command] [flags]
 
 Flags:
-  -c, --concurrency int     Number of concurrent requests. (default 10)
-  -n, --count int           Total number requests. (default 1000)
+  -c, --count int           Number of queries to attempt. [0 = run until interrupted] (default 100)
   -h, --help                help for run
-  -i, --interval duration   Number of concurrent requests. (default 5s)
-  -f, --names string        File containing newline delimited records to lookup. (- for stdin) (default "-")
-  -q, --qps int             QPS target for each concurrent worker.
-
-Use "dnsbench run [command] --help" for more information about a command.
+  -i, --interval duration   Reporting interval. (default 5s)
+  -m, --max-workers int     Maximum number of workers to spawn. (default 10)
+  -f, --names string        Read query names from this file. (default "-")
+  -n, --nameserver string   Nameserver to benchmark. (default "8.8.8.8:53")
+  -q, --qps int             QPS target for the test run. [0 = No limit]
+  -r, --resolver string     Resolver mode. [remote,local] (default "remote")
+  -w, --workers int         Initial worker count. (default 1)
 ```
 
 Example 1: Benchmark DNS using local resolver:
 
 ```bash
-$ echo "example.com" | dnsbench run local --concurrency 1 --count 10
+$ echo "example.com" | dnsbench run --resolver=local --count=10
 Reading names from /dev/stdin
 Benchmarking...
 
@@ -62,7 +59,7 @@ Slowest request: 8.49 [ms]
 Example 2: Benchmark a specified nameserver with a file of domains:
 
 ```bash
-dnsbench run remote 8.8.8.8 --names "domains_to_lookup.txt"
+dnsbench run --nameserver=8.8.8.8 --names "domains_to_lookup.txt"
 ```
 
 with domains listed on individual lines of **domains_to_lookup.txt**, such as:

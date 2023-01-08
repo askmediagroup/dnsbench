@@ -8,7 +8,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/codahale/hdrhistogram"
+	"github.com/HdrHistogram/hdrhistogram-go"
 )
 
 const ms float64 = 1000000

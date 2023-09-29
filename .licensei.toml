@@ -1,0 +1,12 @@
+approved = [
+  "apache-2.0",
+  "bsd-2-clause",
+  "bsd-3-clause",
+  "isc",
+  "mpl-2.0",
+  "mit",
+]
+
+[header]
+template = """// Copyright :YEAR: AskMediaGroup.
+// SPDX-License-Identifier: Apache-2.0"""

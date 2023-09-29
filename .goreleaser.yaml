@@ -1,0 +1,107 @@
+project_name: dnsbench
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+- main: ./cmd/dnsbench
+  binary: dnsbench
+  
+  env:
+  - CGO_ENABLED=0
+
+  flags:
+   - "-trimpath"
+   - "-mod=readonly"
+
+  ldflags:
+   - "-s -w"
+   - "-X github.com/askmediagroup/dnsbench/pkg/cmd.dnsbenchVersion={{ .Version }}"
+   - "-X github.com/askmediagroup/dnsbench/pkg/cmd.gitCommit={{ .Commit }}"
+   - "-X github.com/askmediagroup/dnsbench/pkg/cmd.buildDate={{ .Date }}"
+
+  goos:
+  - darwin
+  - linux
+  - windows
+
+  goarch:
+   - amd64
+   - arm64
+
+  ignore:
+    - goos: windows
+      goarch: arm64
+
+dockers:
+  - use: buildx
+    goarch: amd64
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.vendor=AskMediaGroup"
+      - "--label=org.opencontainers.image.description=dnsbench {{ .Version }}"
+      - "--label=org.opencontainers.image.url=https://github.com/askmediagroup/dnsbench"
+      - "--label=org.opencontainers.image.documentation=https://github.com/askmediagroup/dnsbench/blob/main/README.md"
+      - "--label=org.opencontainers.image.source=https://github.com/askmediagroup/dnsbench"
+      - "--label=org.opencontainers.image.licenses=Apache-2.0"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.created={{ time \"2006-01-02T15:04:05Z07:00\" }}"
+    image_templates:
+      - "ghcr.io/askmediagroup/dnsbench:{{ .Version }}-amd64"
+  
+  - use: buildx
+    goarch: arm64
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.vendor=AskMediaGroup"
+      - "--label=org.opencontainers.image.description=dnsbench {{ .Version }}"
+      - "--label=org.opencontainers.image.url=https://github.com/askmediagroup/dnsbench"
+      - "--label=org.opencontainers.image.documentation=https://github.com/askmediagroup/dnsbench/blob/main/README.md"
+      - "--label=org.opencontainers.image.source=https://github.com/askmediagroup/dnsbench"
+      - "--label=org.opencontainers.image.licenses=Apache-2.0"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.created={{ time \"2006-01-02T15:04:05Z07:00\" }}"
+    image_templates:
+      - "ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64"
+
+docker_manifests:
+  - name_template: ghcr.io/askmediagroup/dnsbench:{{ .Version }}
+    image_templates:
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-amd64
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64
+
+  - name_template: ghcr.io/askmediagroup/dnsbench:{{ .Major }}.{{ .Minor }}
+    image_templates:
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-amd64
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64
+
+  - name_template: ghcr.io/askmediagroup/dnsbench:{{ .Major }}
+    image_templates:
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-amd64
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64
+
+  - name_template: ghcr.io/askmediagroup/dnsbench:latest
+    image_templates:
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-amd64
+      - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_SHA256SUMS"
+
+archives:
+  - format: binary
+
+changelog:
+  use: github-native
+
+release:
+  github:
+    owner: askmediagroup
+    name: dnsbench

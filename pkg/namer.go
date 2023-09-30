@@ -5,6 +5,7 @@ package dnsbench
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"sync/atomic"
 
@@ -24,6 +25,11 @@ func FileNamer(file io.Reader) (Namer, error) {
 	for scanner.Scan() {
 		names = append(names, Name{Name: dns.Fqdn(scanner.Text()), Type: dns.TypeA})
 	}
+
+	if len(names) == 0 {
+		return nil, errors.New("no names found in file")
+	}
+
 	i := int64(-1)
 	n := func() Name {
 		return names[atomic.AddInt64(&i, 1)%int64(len(names))]

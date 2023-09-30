@@ -24,3 +24,18 @@ func TestNamer(t *testing.T) {
 		}
 	}
 }
+
+func TestNamerEmptyFile(t *testing.T) {
+	names := []string{}
+	reader := strings.NewReader(strings.Join(names, "\n"))
+
+	namer, err := FileNamer(reader)
+
+	if err == nil {
+		t.Error("expected error with message \"no names found in file\", but got nil")
+	}
+
+	if namer != nil {
+		t.Error("expected namer to be nil")
+	}
+}

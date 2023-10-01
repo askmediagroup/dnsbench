@@ -1,3 +1,4 @@
 .DS_Store
-dist/dnsbench*
-dist/*.docker
+dist/
+bin/
+.licensei.cache

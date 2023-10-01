@@ -1,0 +1,32 @@
+name: Feature Request
+description: Suggest a new feature or other improvement
+labels: ["enhancement", "pending-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thank you for opening a feature request.
+  - type: textarea
+    id: dnsbench-version
+    attributes:
+      label: dnsbench version
+      description: Run `dnsbench version` and paste the result bellow. If you are not running the latest version please check if aspects of your feature request have already been implemented in a later release.
+      placeholder: output of `dnsbench version`
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: |
+        What is the end goal of this request?
+        Please keep this section focused on on the goal and not the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: If you have a suggestion for how this feature could be implemented please describe it bellow.
+    validations:
+      required: false

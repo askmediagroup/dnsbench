@@ -1,0 +1,42 @@
+name: Bug Report
+description: Report an error, crash, or unexpected behavior
+labels: ["bug", "pending-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thank you for opening an issue.
+
+        To fix problems we need as much information about the issue as possible. 
+  - type: textarea
+    id: dnsbench-version
+    attributes:
+      label: dnsbench version
+      description: Run `dnsbench version` and paste the result bellow.
+      placeholder: output of `dnsbench version`
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: What actually happened?
+    validations:
+      required: true
+  - type: textarea
+    id: additional-details
+    attributes:
+      label: Additional Details
+      description: Are there any other details that we should know about?
+      placeholder: Additional details...
+    validations:
+      required: false

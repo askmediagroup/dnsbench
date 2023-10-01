@@ -33,8 +33,15 @@ func TestRequestCount(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer s.Shutdown()
+	defer func() {
+		if err := s.Shutdown(); err != nil {
+			t.Error(err)
+		}
+	}()
 	n, err := FileNamer(strings.NewReader("good.invalid"))
+	if err != nil {
+		t.Error(err)
+	}
 	r := NewRunner(NewRemoteResolver(Nameserver(l)))
 	requests := 0
 	for range r.Start(n, 100, 100) {
@@ -53,8 +60,15 @@ func TestMaxWorkers(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer s.Shutdown()
+	defer func() {
+		if err := s.Shutdown(); err != nil {
+			t.Error(err)
+		}
+	}()
 	n, err := FileNamer(strings.NewReader("good.invalid"))
+	if err != nil {
+		t.Error(err)
+	}
 	r := NewRunner(NewRemoteResolver(Nameserver(l)), MaxWorkers(1))
 	requests := 0
 	for range r.Start(n, 100, 100) {
@@ -77,8 +91,15 @@ func TestTimeout(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer s.Shutdown()
+	defer func() {
+		if err := s.Shutdown(); err != nil {
+			t.Error(err)
+		}
+	}()
 	n, err := FileNamer(strings.NewReader("good.invalid"))
+	if err != nil {
+		t.Error(err)
+	}
 	r := NewRunner(NewRemoteResolver(Nameserver(l), Timeout(time.Millisecond)), MaxWorkers(1))
 	requests := 0
 	var res *Result
@@ -109,8 +130,15 @@ func TestQPS(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer s.Shutdown()
+	defer func() {
+		if err := s.Shutdown(); err != nil {
+			t.Error(err)
+		}
+	}()
 	n, err := FileNamer(strings.NewReader("good.invalid"))
+	if err != nil {
+		t.Error(err)
+	}
 	r := NewRunner(NewRemoteResolver(Nameserver(l)))
 	requests := 0
 	for range r.Start(n, target, target) {

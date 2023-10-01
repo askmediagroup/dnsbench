@@ -62,8 +62,8 @@ func (r *TextReporter) Update(res *Result) {
 		r.errors++
 		r.intErrors++
 	}
-	r.hist.RecordValue(int64(res.Duration))
-	r.intHist.RecordValue(int64(res.Duration))
+	_ = r.hist.RecordValue(int64(res.Duration))
+	_ = r.intHist.RecordValue(int64(res.Duration))
 }
 
 // NewInterval resets the current interval statistics.

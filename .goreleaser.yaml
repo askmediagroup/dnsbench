@@ -7,6 +7,7 @@ before:
 builds:
 - main: ./cmd/dnsbench
   binary: dnsbench
+  mod_timestamp: "{{ .CommitTimestamp }}"
   
   env:
   - CGO_ENABLED=0
@@ -19,7 +20,7 @@ builds:
    - "-s -w"
    - "-X github.com/askmediagroup/dnsbench/pkg/cmd.dnsbenchVersion={{ .Version }}"
    - "-X github.com/askmediagroup/dnsbench/pkg/cmd.gitCommit={{ .Commit }}"
-   - "-X github.com/askmediagroup/dnsbench/pkg/cmd.buildDate={{ .Date }}"
+   - "-X github.com/askmediagroup/dnsbench/pkg/cmd.buildDate={{ .CommitDate }}"
 
   goos:
   - darwin
@@ -49,7 +50,7 @@ dockers:
       - "--label=org.opencontainers.image.licenses=Apache-2.0"
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-      - "--label=org.opencontainers.image.created={{ time \"2006-01-02T15:04:05Z07:00\" }}"
+      - "--label=org.opencontainers.image.created={{ .CommitDate }}"
     image_templates:
       - "ghcr.io/askmediagroup/dnsbench:{{ .Version }}-amd64"
   
@@ -67,7 +68,7 @@ dockers:
       - "--label=org.opencontainers.image.licenses=Apache-2.0"
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-      - "--label=org.opencontainers.image.created={{ time \"2006-01-02T15:04:05Z07:00\" }}"
+      - "--label=org.opencontainers.image.created={{ .CommitDate }}"
     image_templates:
       - "ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64"
 
@@ -93,7 +94,7 @@ docker_manifests:
       - ghcr.io/askmediagroup/dnsbench:{{ .Version }}-arm64
 
 checksum:
-  name_template: "{{ .ProjectName }}_{{ .Version }}_SHA256SUMS"
+  name_template: "checksums.txt"
 
 archives:
   - format: binary

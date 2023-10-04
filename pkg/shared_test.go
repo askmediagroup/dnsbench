@@ -16,7 +16,7 @@ func handler(w dns.ResponseWriter, req *dns.Msg) {
 	m.SetReply(req)
 	m.Answer = make([]dns.RR, 1)
 	m.Answer[0] = &dns.A{Hdr: dns.RR_Header{Name: m.Question[0].Name, Rrtype: dns.TypeA, Class: dns.ClassINET, Ttl: 0}, A: net.ParseIP("127.0.0.1")}
-	w.WriteMsg(m)
+	_ = w.WriteMsg(m)
 }
 
 func handlerSlow(w dns.ResponseWriter, req *dns.Msg) {
@@ -25,7 +25,7 @@ func handlerSlow(w dns.ResponseWriter, req *dns.Msg) {
 	m.Answer = make([]dns.RR, 1)
 	m.Answer[0] = &dns.A{Hdr: dns.RR_Header{Name: m.Question[0].Name, Rrtype: dns.TypeA, Class: dns.ClassINET, Ttl: 0}, A: net.ParseIP("127.0.0.1")}
 	time.Sleep(time.Millisecond * 10)
-	w.WriteMsg(m)
+	_ = w.WriteMsg(m)
 }
 
 func runServer(laddr string, opts ...func(*dns.Server)) (*dns.Server, string, error) {
@@ -44,7 +44,7 @@ func runServer(laddr string, opts ...func(*dns.Server)) (*dns.Server, string, er
 	}
 
 	go func() {
-		server.ActivateAndServe()
+		_ = server.ActivateAndServe()
 		pc.Close()
 	}()
 

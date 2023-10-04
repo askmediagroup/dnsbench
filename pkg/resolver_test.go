@@ -49,7 +49,11 @@ func TestRemoteResolver(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer s.Shutdown()
+	defer func() {
+		if err := s.Shutdown(); err != nil {
+			t.Error(err)
+		}
+	}()
 
 	r := NewRemoteResolver(Nameserver(l))
 	n, err := FileNamer(strings.NewReader("good.invalid\nbad.invalid"))
@@ -71,7 +75,11 @@ func TestRemoteResolverTimeout(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer s.Shutdown()
+	defer func() {
+		if err := s.Shutdown(); err != nil {
+			t.Error(err)
+		}
+	}()
 
 	r := NewRemoteResolver(Nameserver(l), Timeout(time.Millisecond))
 	n, err := FileNamer(strings.NewReader("good.invalid"))

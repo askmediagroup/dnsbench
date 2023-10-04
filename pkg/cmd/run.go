@@ -38,7 +38,6 @@ func newRunCommand() *cobra.Command {
 
 type runOpts struct {
 	nameserver string
-	port       int
 	qps        int
 	count      int
 	maxWorkers int

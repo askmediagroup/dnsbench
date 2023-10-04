@@ -21,7 +21,6 @@ type Runner struct {
 	stop       chan struct{}
 	workers    int
 	maxWorkers int
-	qps        int
 	begin      time.Time
 	end        time.Time
 }

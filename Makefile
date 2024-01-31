@@ -4,10 +4,15 @@ export PATH := $(abspath bin/):${PATH}
 clean:
 	rm -rf dist/
 
+LD_FLAGS=-ldflags " \
+    -X github.com/askmediagroup/dnsbench/pkg/cmd.dnsbenchVersion=$(shell git describe --tags --dirty --broken) \
+    -X github.com/askmediagroup/dnsbench/pkg/cmd.gitCommit=$(shell git rev-parse HEAD) \
+    -X github.com/askmediagroup/dnsbench/pkg/cmd.buildDate=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ') \
+	"
 .PHONY: build
 build: dist/dnsbench
 dist/dnsbench:
-	go build -o dist/dnsbench cmd/dnsbench/main.go
+	go build $(LD_FLAGS) -o dist/dnsbench cmd/dnsbench/main.go
 
 .PHONY: test
 test:

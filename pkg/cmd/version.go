@@ -22,8 +22,8 @@ type version struct {
 	dnsenchVersion string
 	gitCommit      string
 	buildDate      string
-	goOs           string
-	goArch         string
+	goos           string
+	goarch         string
 }
 
 func newVersionCommand() *cobra.Command {
@@ -31,7 +31,7 @@ func newVersionCommand() *cobra.Command {
 		Use:   "version",
 		Short: "Display program version.",
 		Run: func(_ *cobra.Command, _ []string) {
-			fmt.Printf("Version: %+v\n", version{
+			fmt.Printf("Version: %#v\n", version{
 				dnsbenchVersion,
 				gitCommit,
 				buildDate,
